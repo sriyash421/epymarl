@@ -15,7 +15,7 @@ from controllers import REGISTRY as mac_REGISTRY
 from components.episode_buffer import ReplayBuffer
 from components.transforms import OneHot
 
-results_path = os.path.join(os.environ['SCRATCH'], "epymarl/results")
+results_path = os.path.join(os.environ['SCRATCH'], "ippo")
 
 os.makedirs(results_path, exist_ok=True)
 
