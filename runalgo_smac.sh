@@ -1,11 +1,9 @@
 #!/bin/bash
 
 #SBATCH --account=rrg-bengioy-ad
-#SBATCH --cpus-per-task=2
-#SBATCH --gres=gpu:0
-#SBATCH --mem=16G
+#SBATCH --cpus-per-task=5
+#SBATCH --mem=32G
 #SBATCH --time=23:50:00
-#SBATCH -o ${SCRATCH}/ippo_logs/%j.out
 #SBATCH --job-name=ippo
 #SBATCH --array=0-4
 
