@@ -15,6 +15,9 @@ from controllers import REGISTRY as mac_REGISTRY
 from components.episode_buffer import ReplayBuffer
 from components.transforms import OneHot
 
+results_path = os.path.join(os.environ['SCRATCH'], "epymarl/results")
+
+os.makedirs(results_path, exist_ok=True)
 
 def run(_run, _config, _log):
 
@@ -50,7 +53,7 @@ def run(_run, _config, _log):
     
     if args.use_wandb:
         wandb_logs_direc = os.path.join(
-            dirname(dirname(abspath(__file__))), "results", "wandb_logs", _config["name"], map_name
+            results_path, "wandb_logs", _config["name"], map_name
         )
         wandb_exp_direc = os.path.join(wandb_logs_direc, "{}").format(unique_token)
         os.makedirs(wandb_exp_direc, exist_ok=True)
