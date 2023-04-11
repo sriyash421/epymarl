@@ -7,6 +7,7 @@ class Logger:
         self.console_logger = console_logger
 
         self.use_tb = False
+        self.use_wandb = False
         self.use_sacred = False
         self.use_hdf = False
 
@@ -18,6 +19,13 @@ class Logger:
         configure(directory_name)
         self.tb_logger = log_value
         self.use_tb = True
+    
+    def setup_wandb(self, directory_name, config_dict):
+        # Import here so it doesn't have to be installed if you don't use it
+        import wandb
+        wandb.init(project='Topo-IPPO', dir=directory_name, config=config_dict, mode="offline")
+        self.wandb_logger = wandb.log
+        self.use_wandb = True
 
     def setup_sacred(self, sacred_run_dict):
         self._run_obj = sacred_run_dict
@@ -29,6 +37,10 @@ class Logger:
 
         if self.use_tb:
             self.tb_logger(key, value, t)
+        
+        if self.use_wandb:
+            self.wandb_logger({key: value,
+                               key+"_step": t})
 
         if self.use_sacred and to_sacred:
             if key in self.sacred_info:

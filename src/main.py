@@ -55,7 +55,7 @@ def _get_config(params, arg_name, subfolder):
 
 def recursive_dict_update(d, u):
     for k, v in u.items():
-        if isinstance(v, collections.Mapping):
+        if isinstance(v, collections.abc.Mapping):
             d[k] = recursive_dict_update(d.get(k, {}), v)
         else:
             d[k] = v
@@ -88,6 +88,9 @@ if __name__ == '__main__':
     # config_dict = {**config_dict, **env_config, **alg_config}
     config_dict = recursive_dict_update(config_dict, env_config)
     config_dict = recursive_dict_update(config_dict, alg_config)
+
+    config_dict['eps_clip'] = float(config_dict['eps_clip'])
+    config_dict['weight_decay'] = float(config_dict['weight_decay'])
 
     try:
         map_name = config_dict["env_args"]["map_name"]

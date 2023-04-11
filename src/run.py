@@ -47,6 +47,15 @@ def run(_run, _config, _log):
         )
         tb_exp_direc = os.path.join(tb_logs_direc, "{}").format(unique_token)
         logger.setup_tb(tb_exp_direc)
+    
+    if args.use_wandb:
+        wandb_logs_direc = os.path.join(
+            dirname(dirname(abspath(__file__))), "results", "wandb_logs", _config["name"], map_name
+        )
+        wandb_exp_direc = os.path.join(wandb_logs_direc, "{}").format(unique_token)
+        os.makedirs(wandb_exp_direc, exist_ok=True)
+        logger.setup_wandb(wandb_exp_direc, _config)
+
 
     # sacred is on by default
     logger.setup_sacred(_run)
