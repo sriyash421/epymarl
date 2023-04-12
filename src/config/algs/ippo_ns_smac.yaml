@@ -35,4 +35,7 @@ epochs: 4
 eps_clip: 0.2
 name: "ippo-smac"
 
-t_max: 20050000
+t_max: 40050000
+
+use_wd: False
+weight_decay: 0.1
