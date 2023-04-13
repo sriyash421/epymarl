@@ -2,10 +2,10 @@
 
 #SBATCH --account=rrg-bengioy-ad
 #SBATCH --cpus-per-task=5
-#SBATCH --mem=32G
-#SBATCH --time=23:50:00
-#SBATCH --job-name=ippo
-#SBATCH --array=0-4
+#SBATCH --mem=48G
+#SBATCH --time=43:50:00
+#SBATCH --job-name=ippo-smac
+#SBATCH --array=0-3
 
 algo=$1
 env=$2

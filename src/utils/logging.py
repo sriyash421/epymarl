@@ -23,7 +23,7 @@ class Logger:
     def setup_wandb(self, directory_name, config_dict):
         # Import here so it doesn't have to be installed if you don't use it
         import wandb
-        wandb.init(project='Topo-IPPO', dir=directory_name, config=config_dict, mode="offline")
+        wandb.init(project='IPPO', dir=directory_name, config=config_dict, mode="offline")
         self.wandb_logger = wandb.log
         self.use_wandb = True
 

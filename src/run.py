@@ -50,7 +50,7 @@ def run(_run, _config, _log):
         )
         tb_exp_direc = os.path.join(tb_logs_direc, "{}").format(unique_token)
         logger.setup_tb(tb_exp_direc)
-    
+
     if args.use_wandb:
         wandb_logs_direc = os.path.join(
             results_path, "wandb_logs", _config["name"], map_name
@@ -61,7 +61,7 @@ def run(_run, _config, _log):
 
 
     # sacred is on by default
-    logger.setup_sacred(_run)
+#    logger.setup_sacred(_run)
 
     # Run and train
     run_sequential(args=args, logger=logger)

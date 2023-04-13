@@ -33,3 +33,6 @@ critic_type: "ac_critic_ns"
 name: "ippo_ns"
 
 t_max: 20050000
+
+use_wd: False
+weight_decay: 0.1
