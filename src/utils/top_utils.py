@@ -65,7 +65,7 @@ class PersistentHomologyCalculation:
 
         triu_indices = np.triu_indices_from(matrix)
         edge_weights = matrix[triu_indices]
-        edge_indices = th.argsort(edge_weights, stable=True)
+        edge_indices = th.argsort(edge_weights)
 
         # 1st dimension: 'source' vertex index of edge
         # 2nd dimension: 'target' vertex index of edge
