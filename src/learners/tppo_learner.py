@@ -81,16 +81,13 @@ class TPPOLearner(PPOLearner):
             entropy = -th.sum(pi * th.log(pi + 1e-10), dim=-1)
             pg_loss = -((th.min(surr1, surr2) + self.args.entropy_coef * entropy) * mask).sum() / mask.sum()
 
-
             top_loss = self.topological_reg(self.get_agent_models)
-            print("Top Loss", top_loss, pg_loss)
-            pg_loss = top_loss
+            pg_loss += top_loss
 
             # Optimise agents
             self.agent_optimiser.zero_grad()
             pg_loss.backward()
             grad_norm = th.nn.utils.clip_grad_norm_(self.agent_params, self.args.grad_norm_clip)
-            print("Grad norm", grad_norm)
             self.agent_optimiser.step()
 
         self.old_mac.load_state(self.mac)
