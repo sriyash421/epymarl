@@ -1,7 +1,11 @@
 import torch as th
 import random
 
-import gfootball.env as football_env
+try:
+    import gfootball.env as football_env
+except:
+    pass
+
 from gym import spaces
 import numpy as np
 from gym.envs.registration import registry, register, make, spec
@@ -27,7 +31,7 @@ class FootballEnv(object):
     def __init__(self, *args, **kwargs):
         self.num_agents = kwargs['num_agents']
         self.scenario_name = kwargs['scenario_name']
-        
+
         # make env
         # if not (args.use_render and args.save_videos):
         self.env = football_env.create_environment(
@@ -57,7 +61,7 @@ class FootballEnv(object):
         #         dump_frequency=1,
         #         logdir=args.video_dir
         #     )
-            
+
         self.max_steps = self.env.unwrapped.observation()[0]["steps_left"]
         self.remove_redundancy = False
         self.zero_feature = False
@@ -134,7 +138,7 @@ class FootballEnv(object):
         info["designated"] = np.array([state[i]["designated"] for i in range(self.num_agents)])
         info["sticky_actions"] = np.stack([state[i]["sticky_actions"] for i in range(self.num_agents)])
         return info
-    
+
 register(
   id="Football-v1",
   entry_point=FootballEnv,
