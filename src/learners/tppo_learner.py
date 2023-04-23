@@ -14,7 +14,7 @@ from .ppo_learner import PPOLearner
 class TPPOLearner(PPOLearner):
     def __init__(self, mac, scheme, logger, args):
         super().__init__(mac, scheme, logger, args)
-        self.topological_reg = TopologicalRegularizer(args.top_coef, "cuda" if args.use_cuda else "cpu")
+        self.topological_reg = TopologicalRegularizer(args.top_coef, "cuda" if args.use_cuda else "cpu", args.sampling_dim)
 
     @property
     def get_agent_models(self):

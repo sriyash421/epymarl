@@ -100,7 +100,7 @@ class PersistentHomologyCalculation:
 class TopologicalRegularizer(th.nn.Module):
     """Topologically regularizer."""
 
-    def __init__(self, lam=0.1, device='cpu'):
+    def __init__(self, lam=0.1, device='cpu', sampling_dim=1):
         """Topologically Regularized Autoencoder.
         Args:
             lam: Regularization strength
@@ -110,6 +110,7 @@ class TopologicalRegularizer(th.nn.Module):
         super().__init__()
         self.lam = lam
         self.device = device
+        self.sampling_dim = sampling_dim
         self.topo_sig = TopologicalSignatureDistance(self.device)
 
     @staticmethod
@@ -125,9 +126,9 @@ class TopologicalRegularizer(th.nn.Module):
         Returns:
             Tuple of final_loss, (...loss components...)
         """
-        if self.args.sampling_dim > 0:
-            indexes = th.randperm(models[0].rnn.weight)[:self.args.sampling_dim]
-            model_distances = [(model.rnn.weight[indexes, indexes])[:, indexes] for model in models]
+        if self.sampling_dim > 0:
+            indexes = th.randperm(models[0].rnn.weight.shape[0])[:self.sampling_dim]
+            model_distances = [(model.rnn.weight[indexes])[:, indexes] for model in models]
         else:
             model_distances = [model.rnn.weight for model in models]
         loss = sum([self.topo_sig(model1, model2) for model1, model2 in itertools.combinations(model_distances, 2)])
