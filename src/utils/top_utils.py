@@ -125,7 +125,11 @@ class TopologicalRegularizer(th.nn.Module):
         Returns:
             Tuple of final_loss, (...loss components...)
         """
-        model_distances = [model.rnn.weight for model in models]
+        if self.args.sampling_dim > 0:
+            indexes = th.randperm(models[0].rnn.weight)[:self.args.sampling_dim]
+            model_distances = [(model.rnn.weight[indexes, indexes])[:, indexes] for model in models]
+        else:
+            model_distances = [model.rnn.weight for model in models]
         loss = sum([self.topo_sig(model1, model2) for model1, model2 in itertools.combinations(model_distances, 2)])
         return self.lam * loss
 
